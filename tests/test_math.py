@@ -1,4 +1,4 @@
-from src.math import add, multiply
+from src.math_utils import add, multiply
 
 
 def test_add():
