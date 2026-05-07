@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+import matplotlib.pyplot as plt
 import pickle
 import os
 
@@ -11,18 +12,17 @@ print(data.head())
 
 # Shuffle data. It randomizes the rows. models learn better when data is mixed.
 # frac=1 = take 100% of data but shuffled
-data = data.sample(frac=1, random_state=42)
+data = data.sample(frac=1)
 
 # Class column. mpg means or is miles per gallon. 1 US gallon `~ 3.8 liters`
 y_variable = data["mpg"]
 
 # Feature columns
-# x_variables = data.loc[:, data.columns != "mpg"]
-x_variables = data[["horsepower", "weight"]]
+x_variables = data.loc[:, data.columns != "mpg"]
 
 # Split data
 x_train, x_test, y_train, y_test = train_test_split(
-    x_variables, y_variable, test_size=0.2, random_state=42
+    x_variables, y_variable, test_size=0.2
 )
 
 # Train model
@@ -41,11 +41,11 @@ print("MAE:", mean_absolute_error(y_test, y_pred))
 print("MSE:", mean_squared_error(y_test, y_pred))
 
 # Visualize the output
-# plt.scatter(y_test, y_pred)
-# plt.xlabel("Actual MPG")
-# plt.ylabel("Predicted MPG")
-# plt.title("Actual vs Predicted MPG")
-# plt.show()
+plt.scatter(y_test, y_pred)
+plt.xlabel("Actual MPG")
+plt.ylabel("Predicted MPG")
+plt.title("Actual vs Predicted MPG")
+plt.show(block=False)
 # Ensure models folder exists
 os.makedirs("data/models", exist_ok=True)
 
